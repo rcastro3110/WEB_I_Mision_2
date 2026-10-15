@@ -3,15 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/src/style.css" />
     <title>Buscador de series</title>
   </head>
   <body>
-    <h1>Buscador de series</h1>
-    <form id="formulario">
-      <input id="busqueda" type="text" placeholder="Busca una serie..." />
-      <button type="submit">Buscar</button>
-    </form>
-    <div id="resultado"></div>
+    <header class="cabecera">
+      <h1>Buscador de series</h1>
+      <form id="formulario">
+        <input id="busqueda" type="text" placeholder="Busca una serie..." />
+        <button type="submit">Buscar</button>
+        <label>
+          <input type="checkbox" id="soloNota" /> Solo con nota
+        </label>
+      </form>
+    </header>
+    
+    <main>
+      <p id="media" class="media"></p>
+      <div id="resultado" class="resultado"></div>
+    </main>
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
