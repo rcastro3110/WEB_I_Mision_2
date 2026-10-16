@@ -1,7 +1,7 @@
-import { pedirEpisodios } from "./api.js";
-pedirEpisodios(169).then(console.log);
-
-import { buscarSeries } from "./api.js";
+import { 
+  buscarSeries, 
+  buscarEpisodios 
+} from "./api.js";
 import { 
     limpiarSeries, 
     soloConNota, 
@@ -18,6 +18,7 @@ import {
 const formulario = document.getElementById("formulario");
 const campo = document.getElementById("busqueda");
 const checkNota = document.getElementById("soloNota");
+const contenedor = document.getElementById("resultado");
 
 let seriesActuales = []; // últimas series recibidas de la API
 
@@ -49,3 +50,16 @@ formulario.addEventListener("submit", async (evento) => {
 });
 
 checkNota.addEventListener("change", pintar);
+
+contenedor.addEventListener("click", async (evento) => {
+  const tarjeta = evento.target.closest(".tarjeta");
+  if (!(tarjeta)) return;
+  const id = tarjeta.dataset.id;
+
+  try{
+    const serie = await buscarEpisodios(id);
+    console.log("Detalle de la serie:", serie);
+  } catch(error){
+    console.error("No se pudo cargar la serie:", error.message);
+  }
+});

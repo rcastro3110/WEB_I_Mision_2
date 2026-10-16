@@ -26,7 +26,7 @@ export function mostrarSeries(series) {
   contenedor.innerHTML = series
     .map(
       (s) => `
-        <article class="tarjeta">
+        <article class="tarjeta" data-id="${s.id}">
           ${
             s.poster
               ? `<img class="tarjeta__poster" src="${escapar(s.poster)}" alt="Póster de ${escapar(s.nombre)}" loading="lazy" />`

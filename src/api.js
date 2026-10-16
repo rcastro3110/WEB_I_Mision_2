@@ -7,7 +7,7 @@ export async function buscarSeries(texto) {
   return respuesta.json();
 }
 
-export async function pedirEpisodios(id) {
+export async function buscarEpisodios(id) {
   const url = `https://api.tvmaze.com/shows/${id}?embed=episodes`;
   const respuesta = await fetch(url);
   if (!respuesta.ok) {
