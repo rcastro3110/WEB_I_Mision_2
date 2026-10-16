@@ -173,3 +173,102 @@ main {
   font-size: 0.85rem;
   color: var(--texto-suave);
 }
+
+/* ---------- Vista de detalle ---------- */
+.detalle {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+.volver {
+  margin-bottom: 1.25rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  color: var(--texto);
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.volver:hover {
+  background: var(--borde);
+}
+
+.detalle__cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.detalle__poster {
+  width: 210px;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid var(--borde);
+}
+
+.detalle__poster--vacio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--borde);
+  color: var(--texto-suave);
+}
+
+.detalle__cabecera h2 {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+}
+
+.detalle__cabecera p {
+  margin: 0 0 0.4rem;
+  color: var(--texto-suave);
+}
+
+.detalle__resumen {
+  margin-bottom: 2rem;
+  line-height: 1.7;
+  color: var(--texto);
+}
+
+/* ---------- Episodios ---------- */
+.episodios h3 {
+  margin: 1.5rem 0 0.6rem;
+  color: var(--acento-hover);
+}
+
+.episodios__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.episodio {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 1rem;
+  padding: 0.6rem 1rem;
+  background: var(--superficie);
+  border-bottom: 1px solid var(--borde);
+}
+
+.episodio:last-child {
+  border-bottom: none;
+}
+
+.episodio:hover {
+  background: var(--borde);
+}
+
+.episodio span:nth-child(2) {
+  color: var(--texto-suave);
+  font-size: 0.85rem;
+}

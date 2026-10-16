@@ -4,23 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/src/style.css" />
-    <title>Buscador de series</title>
+    <title>TV Show Finder</title>
   </head>
   <body>
-    <header class="cabecera">
-      <h1>Buscador de series</h1>
+    <header class="cabecera" id="cabecera">
+      <h1>TV Show Finder</h1>
       <form id="formulario" class="buscador">
-        <input id="busqueda" type="text" placeholder="Busca una serie..." />
-        <button type="submit">Buscar</button>
+        <input id="busqueda" type="text" placeholder="Search for a show..." />
+        <button type="submit">	Search</button>
         <label class="filtro">
-          <input type="checkbox" id="soloNota" /> Solo con nota
+          <input type="checkbox" id="soloNota" /> Rated only
         </label>
       </form>
     </header>
     
     <main>
-      <p id="media" class="media"></p>
-      <div id="resultado" class="resultado"></div>
+      <div id="lista">
+        <p id="media" class="media"></p>
+        <div id="resultado" class="resultado"></div>
+      </div>
+      <section id="detalle" class="detalle" hidden></section>
     </main>
 
     <script type="module" src="/src/main.js"></script>

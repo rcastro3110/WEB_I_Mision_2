@@ -3,22 +3,28 @@ import {
   buscarEpisodios 
 } from "./api.js";
 import { 
-    limpiarSeries, 
+    limpiarSeries,
+    limpiarDetalle, 
     soloConNota, 
-    notaMedia 
+    notaMedia,
+    limpiarEpisodios,
+    agruparPorTemporada, 
 } from "./logica.js";
 import {
   mostrarCargando,
   mostrarError,
   mostrarVacio,
   mostrarSeries,
-  mostrarMedia
+  mostrarMedia,
+  mostrarDetalle,
+  mostrarEpisodios,
 } from "./render.js";
 
 const formulario = document.getElementById("formulario");
 const campo = document.getElementById("busqueda");
 const checkNota = document.getElementById("soloNota");
 const contenedor = document.getElementById("resultado");
+const detalle = document.getElementById("detalle");
 
 let seriesActuales = []; // últimas series recibidas de la API
 
@@ -58,8 +64,22 @@ contenedor.addEventListener("click", async (evento) => {
 
   try{
     const serie = await buscarEpisodios(id);
-    console.log("Detalle de la serie:", serie);
+
+    mostrarDetalle(limpiarDetalle(serie));
+    mostrarEpisodios(agruparPorTemporada(limpiarEpisodios(serie)));
+
+    document.getElementById("lista").hidden = true;
+    document.getElementById("cabecera").hidden = true;
+    document.getElementById("detalle").hidden = false;
   } catch(error){
     console.error("No se pudo cargar la serie:", error.message);
   }
+});
+
+detalle.addEventListener("click", (evento) => {
+  if(!evento.target.closest("#volver")) return;
+
+  detalle.hidden = true;
+  document.getElementById("lista").hidden = false;
+  document.getElementById("cabecera").hidden = false;
 });

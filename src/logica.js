@@ -10,6 +10,20 @@ export function limpiarSeries(resultados) {
   }));
 }
 
+export function limpiarDetalle(serie) {
+  return {
+    id: serie.id,
+    nombre: serie.name,
+    poster: serie.image?.medium ?? null,
+    nota: serie.rating?.average ?? null,
+    generos: serie.genres ?? [],
+    estado: serie.status,
+    estreno: serie.premiered ?? "?",
+    cadena: serie.network?.name ?? serie.webChannel?.name ?? "Unknown",
+    resumen: serie.summary ?? "No summary.",
+  };
+}
+
 export function soloConNota(series) {
   return series.filter((s) => s.nota !== null);
 }
@@ -19,4 +33,20 @@ export function notaMedia(series) {
   if (conNota.length === 0) return null;
   const suma = conNota.reduce((acc, s) => acc + s.nota, 0);
   return suma / conNota.length;
+}
+
+export function limpiarEpisodios(serie) {
+  const episodios = serie._embedded?.episodes ?? [];
+  return episodios.map((e) => ({
+    id: e.id,
+    temporada: e.season,
+    numero: e.number ?? "Special",
+    nombre: e.name,
+    fecha: e.airdate ?? "No date",
+    nota: e.rating?.average ?? null
+  }));
+}
+
+export function agruparPorTemporada(episodios) {
+  return Object.groupBy(episodios, (e) => e.temporada);
 }
