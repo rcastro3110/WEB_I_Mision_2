@@ -1,3 +1,6 @@
+import { pedirEpisodios } from "./api.js";
+pedirEpisodios(169).then(console.log);
+
 import { buscarSeries } from "./api.js";
 import { 
     limpiarSeries, 

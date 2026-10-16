@@ -1,11 +1,21 @@
 const contenedor = document.getElementById("resultado");
 
+//Funcion por si viene codigo HTML que no queremos
+function escapar(texto) {
+  return String(texto)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
 export function mostrarCargando() {
   contenedor.innerHTML = `<p class="estado">⏳ Cargando…</p>`;
 }
 
 export function mostrarError(mensaje) {
-  contenedor.innerHTML = `class="estado estado--error">⚠ ${mensaje}</p>`;
+  contenedor.innerHTML = `<p class="estado estado--error">⚠ ${escapar(mensaje)}</p>`;
 }
 
 export function mostrarVacio() {
@@ -19,13 +29,13 @@ export function mostrarSeries(series) {
         <article class="tarjeta">
           ${
             s.poster
-              ? `<img class="tarjeta__poster" src="${s.poster}" alt="Póster de ${s.nombre}" loading="lazy" />`
+              ? `<img class="tarjeta__poster" src="${escapar(s.poster)}" alt="Póster de ${escapar(s.nombre)}" loading="lazy" />`
               : `<div class="tarjeta__poster tarjeta__poster--vacio">Sin póster</div>`
           }
           <div class="tarjeta__info">
-            <h2>${s.nombre} <span class="anio">(${s.estreno})</span></h2>
+            <h2>${escapar(s.nombre)} <span class="anio">(${escapar(s.estreno)})</span></h2>
             <p class="nota">⭐ ${s.nota ?? "Sin nota"}</p>
-            <p class="generos">${s.generos.join(", ") || "Sin género"}</p>
+            <p class="generos">${escapar(s.generos.join(", ")) || "Sin género"}</p>
           </div>
         </article>`
     )
