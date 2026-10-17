@@ -19,7 +19,9 @@ import {
   mostrarDetalle,
   mostrarEpisodios,
   mostrarDetalleCargando,
-  mostrarDetalleError
+  mostrarDetalleError,
+  mostrarVistaDetalle,
+  mostrarVistaLista
 } from "./render.js";
 
 const formulario = document.getElementById("formulario");
@@ -29,6 +31,8 @@ const contenedor = document.getElementById("resultado");
 const detalle = document.getElementById("detalle");
 
 let seriesActuales = []; // últimas series recibidas de la API
+let ultimaBusqueda = 0;  // nº de la última búsqueda lanzada
+let ultimoDetalle = 0;   // nº del último detalle pedido
 
 function pintar() {
   const lista = checkNota.checked ? soloConNota(seriesActuales) : seriesActuales;
@@ -52,12 +56,15 @@ formulario.addEventListener("submit", async (evento) => {
   const texto = campo.value.trim();
   if (!texto) return; // si está vacío, no hacemos nada
 
+  const miBusqueda = ++ultimaBusqueda; // mi número de búsqueda
   mostrarCargando();
   try {
     const datos = await buscarSeries(texto);
+    if (miBusqueda !== ultimaBusqueda) return; // llegó tarde: la ignoramos
     seriesActuales = limpiarSeries(datos);
     pintar();
   } catch (error) {
+    if (miBusqueda !== ultimaBusqueda) return;
     mostrarMedia(null);
     mostrarError(mensajeDeError(error));
   }
@@ -70,24 +77,24 @@ contenedor.addEventListener("click", async (evento) => {
   if (!(tarjeta)) return;
   const id = tarjeta.dataset.id;
 
-  document.getElementById("lista").hidden = true;
-  document.getElementById("cabecera").hidden = true;
-  document.getElementById("detalle").hidden = false;
+  const miDetalle = ++ultimoDetalle; // mi número de detalle
+  mostrarVistaDetalle();
   mostrarDetalleCargando();
 
   try{
     const serie = await buscarEpisodios(id);
+    if (miDetalle !== ultimoDetalle) return;
     mostrarDetalle(limpiarDetalle(serie));
     mostrarEpisodios(agruparPorTemporada(limpiarEpisodios(serie))); 
   } catch(error){
+    if (miDetalle !== ultimoDetalle) return;
     mostrarDetalleError(mensajeDeError(error));
   }
 });
 
 detalle.addEventListener("click", (evento) => {
   if(!evento.target.closest("#volver")) return;
-
-  detalle.hidden = true;
-  document.getElementById("lista").hidden = false;
-  document.getElementById("cabecera").hidden = false;
+  
+  ultimoDetalle++; // invalida cualquier detalle que siga cargando
+  mostrarVistaLista();
 });

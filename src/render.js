@@ -1,5 +1,7 @@
 const contenedor = document.getElementById("resultado");
 const detalle = document.getElementById("detalle");
+const lista = document.getElementById("lista");
+const cabecera = document.getElementById("cabecera");
 
 //Funcion por si viene codigo HTML que no queremos
 function escapar(texto) {
@@ -98,4 +100,16 @@ export function mostrarDetalleError(mensaje) {
   detalle.innerHTML = `
     <button id="volver" class="volver">← Back</button>
     <p class="estado estado--error">⚠ ${escapar(mensaje)}</p>`;
+}
+
+export function mostrarVistaDetalle(){
+  lista.hidden = true;
+  cabecera.hidden = true;
+  detalle.hidden = false;
+}
+
+export function mostrarVistaLista() {
+  lista.hidden = false;
+  cabecera.hidden = false;
+  detalle.hidden = true;
 }
