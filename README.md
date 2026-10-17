@@ -35,7 +35,8 @@ Los listeners de clic de las tarjetas y del botón Back, y las funciones limpiar
 
 ## Decisiones
 
-1. Delegación de eventos. Un solo listener en `#resultado` y otro en `#detalle`, en vez de uno por tarjeta, porque las tarjetas y el botón Back se vuelven a crear cada vez que se repinta con `innerHTML`.
+1. Delegación de eventos. Un solo listener en `#resultado` y otro en `#detalle`, en vez de uno por tarjeta, porque las tarjetas y el botón "Back" se vuelven a crear cada vez que se repinta con `innerHTML`.
 2. Una sola página con `hidden`. El detalle no es otro HTML: ocultamos la lista y mostramos el detalle. Es más sencillo con Vite y permite volver sin repetir la búsqueda, porque la lista queda guardada en `seriesActuales`.
-3. `innerHTML` con `escapar()`. Uso plantillas con `innerHTML` porque son más legibles que `createElement`, y escapo los datos de texto que vienen de la API. La excepción es el resumen, que TVMaze devuelve con etiquetas `<p>` y `<b>`; lo dejo sin escapar para que se vea con formato y asumo ese riesgo porque la fuente es una API conocida.
+3. `innerHTML` con `escapar()`. Se usan plantillas con `innerHTML` porque son más legibles que `createElement`, y se escapan los datos de texto que vienen de la API. El resumen de TVMaze llega con etiquetas HTML (`<p>`, `<b>`), así que primero se las quito y lo convierto en texto plano, y después lo escapo como el resto. Se pierde el formato (las negritas), pero me quito la excepción de seguridad.
 4. Tener solo un idioma en pantalla. Toda la interfaz está en inglés porque la API devuelve los datos en inglés.
+5. Caché en `localStorage`. Se guardan las búsquedas y las series ya vistas para no repetir peticiones. La caché vive solo en `api.js`, así que el resto de módulos no sabe que existe. Los datos no caducan, algo que mejoraría con más tiempo.

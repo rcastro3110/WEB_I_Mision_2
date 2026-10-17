@@ -1,3 +1,7 @@
+function quitarEtiquetas(html) {
+  return html.replace(/<[^>]*>/g, "");
+}
+
 export function limpiarSeries(resultados) {
   return resultados.map(({ show }) => ({
     id: show.id,
@@ -20,7 +24,7 @@ export function limpiarDetalle(serie) {
     estado: serie.status,
     estreno: serie.premiered ?? "?",
     cadena: serie.network?.name ?? serie.webChannel?.name ?? "Unknown",
-    resumen: serie.summary ?? "No summary.",
+    resumen: quitarEtiquetas(serie.summary ?? "No summary."),
   };
 }
 
@@ -31,7 +35,7 @@ export function soloConNota(series) {
 export function notaMedia(series) {
   const conNota = soloConNota(series);
   if (conNota.length === 0) return null;
-  
+
   const suma = conNota.reduce((acc, s) => acc + s.nota, 0);
   return suma / conNota.length;
 }

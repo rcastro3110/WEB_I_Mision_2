@@ -64,7 +64,7 @@ export function mostrarDetalle(d) {
         <p>${escapar(d.estado)} · Premiered: ${escapar(d.estreno)} · ${escapar(d.cadena)}</p>
       </div>
     </div>
-    <div class="detalle__resumen">${d.resumen}</div>
+    <div class="detalle__resumen">${escapar(d.resumen)}</div>
     <section id="episodios" class="episodios"></section>`;
 }
 
@@ -72,10 +72,10 @@ export function mostrarEpisodios(porTemporada) {
   const cont = document.getElementById("episodios");
   cont.innerHTML = Object.entries(porTemporada)
     .map(
-      ([temporada, lista]) => `
-        <h3>Season  ${temporada}</h3>
+      ([temporada, episodios]) => `
+        <h3>Season ${temporada}</h3>
         <ul class="episodios__lista">
-          ${lista
+          ${episodios
             .map(
               (e) => `
             <li class="episodio">
