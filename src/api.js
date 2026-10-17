@@ -1,5 +1,7 @@
+const URL_BASE = "https://api.tvmaze.com";
+
 export async function buscarSeries(texto) {
-  const url = `https://api.tvmaze.com/search/shows?q=${encodeURIComponent(texto)}`;
+  const url = `${URL_BASE}/search/shows?q=${encodeURIComponent(texto)}`;
   const respuesta = await fetch(url);
   if (!respuesta.ok) {
     throw new Error(`HTTP ${respuesta.status}: ${respuesta.statusText}`);
@@ -8,7 +10,7 @@ export async function buscarSeries(texto) {
 }
 
 export async function buscarEpisodios(id) {
-  const url = `https://api.tvmaze.com/shows/${id}?embed=episodes`;
+  const url = `${URL_BASE}/shows/${id}?embed=episodes`;
   const respuesta = await fetch(url);
   if (!respuesta.ok) {
     throw new Error(`HTTP ${respuesta.status}: ${respuesta.statusText}`);

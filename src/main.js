@@ -18,6 +18,8 @@ import {
   mostrarMedia,
   mostrarDetalle,
   mostrarEpisodios,
+  mostrarDetalleCargando,
+  mostrarDetalleError
 } from "./render.js";
 
 const formulario = document.getElementById("formulario");
@@ -38,6 +40,12 @@ function pintar() {
   }
 }
 
+function mensajeDeError(error){
+  return error instanceof TypeError
+    ? "Could not connect. Check your internet connection."
+    : error.message;
+}
+
 formulario.addEventListener("submit", async (evento) => {
   evento.preventDefault(); // evita que el formulario recargue la página
 
@@ -51,7 +59,7 @@ formulario.addEventListener("submit", async (evento) => {
     pintar();
   } catch (error) {
     mostrarMedia(null);
-    mostrarError(error.message);
+    mostrarError(mensajeDeError(error));
   }
 });
 
@@ -62,17 +70,17 @@ contenedor.addEventListener("click", async (evento) => {
   if (!(tarjeta)) return;
   const id = tarjeta.dataset.id;
 
+  document.getElementById("lista").hidden = true;
+  document.getElementById("cabecera").hidden = true;
+  document.getElementById("detalle").hidden = false;
+  mostrarDetalleCargando();
+
   try{
     const serie = await buscarEpisodios(id);
-
     mostrarDetalle(limpiarDetalle(serie));
-    mostrarEpisodios(agruparPorTemporada(limpiarEpisodios(serie)));
-
-    document.getElementById("lista").hidden = true;
-    document.getElementById("cabecera").hidden = true;
-    document.getElementById("detalle").hidden = false;
+    mostrarEpisodios(agruparPorTemporada(limpiarEpisodios(serie))); 
   } catch(error){
-    console.error("No se pudo cargar la serie:", error.message);
+    mostrarDetalleError(mensajeDeError(error));
   }
 });
 

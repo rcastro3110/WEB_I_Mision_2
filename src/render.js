@@ -87,3 +87,15 @@ export function mostrarEpisodios(porTemporada) {
     )
     .join("");
 }
+
+export function mostrarDetalleCargando() {
+  detalle.innerHTML = `
+    <button id="volver" class="volver">← Back</button>
+    <p class="estado">⏳ Loading…</p>`;
+}
+
+export function mostrarDetalleError(mensaje) {
+  detalle.innerHTML = `
+    <button id="volver" class="volver">← Back</button>
+    <p class="estado estado--error">⚠ ${escapar(mensaje)}</p>`;
+}

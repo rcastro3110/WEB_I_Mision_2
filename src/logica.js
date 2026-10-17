@@ -29,8 +29,9 @@ export function soloConNota(series) {
 }
 
 export function notaMedia(series) {
-  const conNota = series.filter((s) => s.nota !== null);
+  const conNota = soloConNota(series);
   if (conNota.length === 0) return null;
+  
   const suma = conNota.reduce((acc, s) => acc + s.nota, 0);
   return suma / conNota.length;
 }
